@@ -9,21 +9,20 @@
   /* ============================================================
      LINKS ANPASSEN: Suche im Code nach "TODO" – dort trägst du
      deine echten Ref-Links und Social-Media-Profile ein.
+     Design-Referenz: gauss.ag (Halbton-Grafiken, Grotesk-Typo,
+     Monospace-Labels, tiefes Grün)
      ============================================================ */
 
   :root {
-    --bg: #f6f1e8;          /* warmes Sand-Beige */
-    --bg-soft: #efe8da;     /* dunkleres Beige für Wechsel-Sektionen */
-    --card: #fcfaf5;        /* warmes Off-White für Karten */
-    --line: #e3d9c7;        /* feine Linien / Ränder */
-    --ink: #292217;         /* Espresso statt reinem Schwarz */
-    --ink-dim: #857a67;     /* warmes Graubraun für Nebentext */
-    --accent: #a5762b;      /* Bronze/Gold */
-    --accent-soft: rgba(165, 118, 43, 0.1);
-    --green: #4e7c57;
-    --bybit: #f7a600;       /* offizielles Bybit-Orange */
-    --blofin: #ff6e26;      /* Blofin-Orange (Annäherung) */
-    --radius: 16px;
+    --bg: #fafaf8;
+    --bg-card: #f2f3f0;
+    --ink: #1a2b22;          /* dunkles Grünschwarz */
+    --ink-dim: #6b7a71;
+    --line: #e5e7e2;
+    --green-deep: #17342a;   /* Sektion in Tiefgrün */
+    --green-soft: #cfe0d5;
+    --bybit: #f7a600;
+    --blofin: #ff6e26;
     font-size: 16px;
   }
 
@@ -34,295 +33,243 @@
   body {
     background: var(--bg);
     color: var(--ink);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.65;
+    font-family: "Helvetica Neue", "Neue Haas Grotesk Text Pro", Helvetica, Arial, system-ui, sans-serif;
+    line-height: 1.6;
     overflow-x: hidden;
   }
 
-  h1, h2, h3, .serif {
-    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  h1, h2, h3 {
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
     text-wrap: balance;
+  }
+  /* Kursiver Serifen-Akzent wie bei "Pillars *of* Success" */
+  .it {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   a { color: inherit; text-decoration: none; }
 
-  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
 
-  .eyebrow {
-    display: inline-block;
-    font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
+  /* ---------- Scroll-Reveal (greift nur, wenn JS läuft) ---------- */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
 
   /* ---------- Navigation ---------- */
   header {
     position: sticky; top: 0; z-index: 100;
     backdrop-filter: blur(10px);
-    background: rgba(246, 241, 232, 0.88);
+    background: rgba(250, 250, 248, 0.9);
     border-bottom: 1px solid var(--line);
   }
-  nav {
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
-  }
-  .logo {
-    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    font-size: 1.3rem; font-weight: 700; letter-spacing: 0.02em;
-  }
-  .logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 28px; font-size: 0.92rem; }
-  .nav-links a { color: var(--ink-dim); transition: color .2s; }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 1.12rem; letter-spacing: 0.05em; }
+  .logo svg { width: 22px; height: 22px; }
+  .nav-links { display: flex; gap: 26px; color: var(--ink-dim); }
+  .nav-links a { transition: color .2s; }
   .nav-links a:hover { color: var(--ink); }
   @media (max-width: 640px) { .nav-links { display: none; } }
 
   /* ---------- Partner-Ticker (Laufband) ---------- */
   .ticker-wrap {
-    background: var(--card);
     border-bottom: 1px solid var(--line);
-    overflow: hidden;
-    white-space: nowrap;
+    overflow: hidden; white-space: nowrap;
+    background: var(--bg);
   }
-  .ticker {
-    display: inline-flex;
-    animation: scroll 32s linear infinite;
-    padding: 9px 0;
-  }
+  .ticker { display: inline-flex; animation: scroll 34s linear infinite; padding: 9px 0; }
   .ticker-wrap:hover .ticker { animation-play-state: paused; }
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ticker { animation: none; }
-  }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker { animation: none; } }
   .ticker-item {
     display: inline-flex; align-items: center; gap: 10px;
-    margin: 0 36px;
-    font-weight: 600; font-size: 0.85rem; letter-spacing: 0.04em;
-    color: var(--ink-dim);
+    margin: 0 34px; color: var(--ink-dim);
   }
-  .ticker-item .dot { color: var(--accent); font-size: 0.6rem; }
-  .ticker-item .t-logo { height: 15px; width: auto; display: block; }
-  .ticker-item .tag {
-    font-size: 0.68rem; font-weight: 700;
-    background: var(--accent-soft); color: var(--accent);
-    padding: 2px 9px; border-radius: 20px;
-  }
-  .ticker-item:hover .tag { background: var(--accent); color: var(--card); }
+  .ticker-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green-deep); }
+  .ticker-item .t-logo { height: 14px; width: auto; display: block; }
+  .ticker-item u { text-decoration: none; border-bottom: 1px solid var(--ink-dim); }
+  .ticker-item:hover { color: var(--ink); }
 
   /* ---------- Hero ---------- */
-  .hero { padding: 88px 0 96px; }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.08fr 0.92fr;
-    gap: 64px;
-    align-items: center;
-  }
-  @media (max-width: 820px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  }
+  .hero { position: relative; padding: 0 0 72px; }
+  .hero-art { display: block; width: 100%; height: 44vh; min-height: 280px; max-height: 460px; }
   .hero h1 {
-    font-size: clamp(2.5rem, 5.6vw, 3.9rem);
-    line-height: 1.08;
-    margin-bottom: 22px;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    max-width: 900px;
+    margin: 8px 0 26px;
   }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero p {
-    max-width: 480px;
-    color: var(--ink-dim); font-size: 1.06rem;
+  .hero .loc { display: flex; align-items: center; gap: 10px; color: var(--ink-dim); margin-bottom: 18px; }
+  .hero p.lead {
+    max-width: 560px; color: var(--ink-dim); font-size: 1.08rem;
     margin-bottom: 34px;
   }
   .btn {
     display: inline-block;
-    padding: 13px 30px; border-radius: 10px;
-    font-weight: 650; font-size: 0.96rem;
-    transition: transform .15s, background .2s, border-color .2s, color .2s;
+    padding: 14px 30px; border-radius: 4px;
+    font-weight: 600; font-size: 0.95rem;
+    transition: background .2s, color .2s, border-color .2s, transform .15s;
   }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-primary {
-    background: var(--ink); color: var(--bg);
-  }
-  .btn-primary:hover { background: #443a29; }
-  .btn-outline {
-    border: 1px solid var(--line); color: var(--ink);
-    margin-left: 10px;
-    background: transparent;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { background: var(--green-deep); }
+  .btn-outline { border: 1px solid var(--ink); color: var(--ink); margin-left: 10px; }
+  .btn-outline:hover { background: var(--ink); color: var(--bg); }
+  .btn-light { background: var(--bg); color: var(--green-deep); }
+  .btn-light:hover { background: var(--green-soft); }
 
-  .hero-stats {
-    display: flex; gap: 44px;
-    margin-top: 52px; flex-wrap: wrap;
-  }
+  .hero-stats { display: flex; gap: 52px; margin-top: 56px; flex-wrap: wrap; }
   .stat b {
-    display: block;
-    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    font-size: 1.65rem; font-weight: 600; color: var(--ink);
+    display: block; font-size: 1.9rem; font-weight: 600; letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
   }
-  .stat small { color: var(--ink-dim); font-size: 0.85rem; }
+  .stat .mono { color: var(--ink-dim); }
 
-  /* ---------- Foto-Platzhalter ---------- */
-  /* TODO: Platzhalter durch echtes Foto ersetzen:
-     <img src="dein-foto.jpg" alt="Umut" class="portrait-img"> */
-  .portrait {
-    aspect-ratio: 4 / 5;
-    max-width: 400px;
-    margin-left: auto;
-    border-radius: 200px 200px var(--radius) var(--radius); /* Bogen oben */
-    border: 1px dashed #cbbfa6;
-    background:
-      radial-gradient(320px 260px at 50% 20%, rgba(165,118,43,0.08), transparent 70%),
-      var(--bg-soft);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 16px;
-    text-align: center;
-    color: var(--ink-dim);
-  }
-  @media (max-width: 820px) { .portrait { margin: 0 auto; } }
-  .portrait svg { width: 88px; height: 88px; opacity: 0.5; }
-  .portrait span { font-size: 0.85rem; max-width: 200px; line-height: 1.5; }
-  .portrait-img {
-    width: 100%; height: 100%; object-fit: cover;
-    border-radius: inherit;
+  /* ---------- Statement ---------- */
+  .statement { padding: 110px 0; }
+  .statement p {
+    max-width: 780px; margin: 0 auto;
+    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    line-height: 1.45; letter-spacing: -0.015em; font-weight: 500;
   }
 
-  /* ---------- Sections ---------- */
-  section { padding: 88px 0; }
-  .section-head { max-width: 560px; margin-bottom: 52px; }
-  .section-title { font-size: 2.1rem; margin-bottom: 10px; }
-  .section-sub { color: var(--ink-dim); }
+  /* ---------- Sections allgemein ---------- */
+  section { padding: 96px 0; }
+  .section-head { margin-bottom: 56px; }
+  .section-head .mono { color: var(--ink-dim); display: block; margin-bottom: 14px; }
+  .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); }
+  .section-sub { color: var(--ink-dim); max-width: 520px; margin-top: 12px; }
 
-  /* ---------- Angebote / Cards ---------- */
-  .cards {
-    display: grid; gap: 22px;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
+  /* ---------- Angebote ---------- */
+  .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
   .card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 34px 30px;
+    background: var(--bg-card);
+    border-radius: 4px;
+    padding: 30px 28px 32px;
     display: flex; flex-direction: column;
-    transition: transform .2s, border-color .2s;
+    position: relative;
+    transition: transform .2s;
   }
-  .card:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .card.featured { border-color: var(--accent); position: relative; }
-  .card.featured::after {
-    content: "Beliebt";
-    position: absolute; top: -11px; right: 22px;
-    background: var(--accent); color: var(--card);
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 3px 12px; border-radius: 20px;
+  .card:hover { transform: translateY(-4px); }
+  .card .num {
+    font-family: Georgia, "Times New Roman", serif; font-style: italic;
+    font-size: 2.2rem; line-height: 1; margin-bottom: 4px;
   }
-  .card .card-icon {
-    width: 40px; height: 40px;
-    margin-bottom: 18px;
-    color: var(--accent);
-  }
-  .card h3 { font-size: 1.35rem; margin-bottom: 8px; }
-  .card ul { list-style: none; margin: 14px 0 26px; flex-grow: 1; }
+  .card canvas { width: 100%; height: 110px; display: block; margin: 6px 0 14px; }
+  .card h3 { font-size: 1.3rem; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .card ul { list-style: none; flex-grow: 1; margin-bottom: 26px; }
   .card ul li {
     color: var(--ink-dim); font-size: 0.93rem;
-    padding: 5px 0 5px 26px; position: relative;
+    padding: 5px 0 5px 22px; position: relative;
   }
-  .card ul li::before {
-    content: "✓"; position: absolute; left: 0;
-    color: var(--green); font-weight: 700;
-  }
+  .card ul li::before { content: "→"; position: absolute; left: 0; color: var(--green-deep); }
   .card .btn { text-align: center; margin-left: 0; }
+  .card .tag {
+    position: absolute; top: 22px; right: 22px;
+    color: var(--green-deep);
+  }
+
+  /* ---------- Tiefgrüne Sektion: Über mich / Foto ---------- */
+  .about { background: var(--green-deep); color: #e9f1eb; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 0.85fr; gap: 72px; align-items: center;
+  }
+  @media (max-width: 820px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .about .mono { color: var(--green-soft); opacity: 0.8; }
+  .about h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 14px 0 22px; }
+  .about p { color: #b9ccbf; max-width: 520px; margin-bottom: 18px; }
+  .about blockquote {
+    border-left: 1px solid rgba(233, 241, 235, 0.35);
+    padding-left: 20px; margin: 30px 0 34px;
+    font-size: 1.12rem; color: #e9f1eb;
+  }
+  /* TODO: Foto einsetzen – der Punkte-Look wird automatisch aus deinem
+     Bild erzeugt, sobald du in index.html beim <canvas class="ht"
+     data-shape="portrait"> ein data-src="dein-foto.jpg" ergänzt. */
+  .portrait-wrap { text-align: center; }
+  .portrait-wrap canvas { width: 100%; max-width: 420px; aspect-ratio: 4 / 5; }
+  .portrait-wrap .mono { display: block; margin-top: 14px; color: var(--green-soft); opacity: 0.7; }
 
   /* ---------- Partner ---------- */
-  .partners { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .partner-grid {
-    display: grid; gap: 22px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    max-width: 780px;
-  }
+  .partner-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 820px; }
   .partner-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 36px 32px;
-    transition: transform .2s, border-color .2s;
+    background: var(--bg-card); border-radius: 4px;
+    padding: 34px 30px;
     display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+    transition: transform .2s;
   }
-  .partner-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .partner-card .partner-logo { height: 30px; width: auto; display: block; }
+  .partner-card:hover { transform: translateY(-4px); }
+  .partner-card .partner-logo { height: 28px; width: auto; display: block; }
   .partner-card .blofin-mark {
     display: inline-flex; align-items: center; gap: 8px;
-    font-weight: 800; font-size: 1.45rem; letter-spacing: -0.01em;
-    color: #16130e;
+    font-weight: 800; font-size: 1.4rem; letter-spacing: -0.01em; color: #16130e;
   }
-  .partner-card .blofin-mark svg { width: 26px; height: 26px; }
+  .partner-card .blofin-mark svg { width: 24px; height: 24px; }
   .partner-card p { color: var(--ink-dim); font-size: 0.93rem; flex-grow: 1; }
-  .partner-card .bonus {
-    display: inline-block;
-    background: rgba(78, 124, 87, 0.1); color: var(--green);
-    font-size: 0.78rem; font-weight: 700;
-    padding: 4px 13px; border-radius: 20px;
-  }
+  .partner-card .bonus { color: var(--green-deep); }
+  .partner-card .btn { margin-left: 0; }
 
-  /* ---------- Socials ---------- */
-  .socials-grid {
-    display: grid; gap: 14px;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  /* ---------- Welt / Erreichbarkeit ---------- */
+  .world { padding-top: 40px; }
+  .world-art { display: block; width: 100%; height: 360px; }
+  .clocks {
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+    margin-top: 8px;
   }
-  .social-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 22px 16px;
-    text-align: center;
-    transition: transform .2s, border-color .2s;
+  .clock { display: flex; align-items: center; gap: 8px; color: var(--ink-dim); border: 1px solid var(--line); padding: 6px 14px; background: var(--bg); }
+  .clock b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Socials (Listen-Stil) ---------- */
+  .social-list { border-top: 1px solid var(--line); }
+  .social-row {
+    display: grid; grid-template-columns: 30px 1fr auto 24px; align-items: center; gap: 18px;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--line);
+    transition: background .2s, padding .2s;
   }
-  .social-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .social-card svg {
-    width: 22px; height: 22px;
-    display: block; margin: 0 auto 10px;
-    fill: var(--ink);
-    transition: fill .2s;
-  }
-  .social-card:hover svg { fill: var(--accent); }
-  .social-card b { font-size: 0.92rem; display: block; }
-  .social-card small { color: var(--ink-dim); font-size: 0.78rem; }
+  .social-row:hover { background: var(--bg-card); padding-left: 14px; }
+  .social-row svg { width: 18px; height: 18px; fill: var(--ink); }
+  .social-row b { font-size: 1.02rem; font-weight: 600; letter-spacing: -0.01em; }
+  .social-row .handle { color: var(--ink-dim); }
+  .social-row .arrow { color: var(--ink-dim); transition: transform .2s; }
+  .social-row:hover .arrow { transform: translate(3px, -3px); color: var(--ink); }
 
   /* ---------- CTA ---------- */
-  .cta {
-    text-align: center;
-    background: var(--card);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-  .cta h2 { font-size: 2rem; margin-bottom: 12px; }
-  .cta p { color: var(--ink-dim); max-width: 480px; margin: 0 auto 30px; }
+  .cta { text-align: center; background: var(--bg-card); }
+  .cta h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 14px; }
+  .cta p { color: var(--ink-dim); max-width: 480px; margin: 0 auto 32px; }
 
   /* ---------- Footer ---------- */
-  footer { padding: 44px 0; text-align: center; color: var(--ink-dim); font-size: 0.85rem; }
-  footer .footer-links { margin-bottom: 14px; display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; }
-  footer .footer-links a:hover { color: var(--accent); }
-  footer .disclaimer {
-    max-width: 720px; margin: 18px auto 0;
-    font-size: 0.75rem;
-    color: #a1957e;
+  footer { padding: 46px 0; color: var(--ink-dim); font-size: 0.85rem; }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+    margin-bottom: 20px;
   }
+  footer .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  footer .footer-links a:hover { color: var(--ink); }
+  footer .disclaimer { max-width: 760px; font-size: 0.74rem; color: #9aa79f; margin-top: 16px; }
 
   a:focus-visible, .btn:focus-visible {
-    outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+    outline: 2px solid var(--green-deep); outline-offset: 3px;
   }
 </style>
 </head>
 <body>
 
-<!-- SVG-Bibliothek: Logos & Icons (einmal definiert, mehrfach verwendet) -->
+<!-- SVG-Bibliothek: Logos & Icons -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <!-- Offizielles Bybit-Wortmarken-Logo (Quelle: web3icons, MIT) -->
@@ -333,26 +280,6 @@
     <!-- Blofin "Fin"-Zeichen (Annäherung – durch offizielles SVG ersetzen, sobald vorhanden) -->
     <symbol id="logo-blofin-fin" viewBox="0 0 24 24">
       <path fill="#ff6e26" d="M4 20C4 9.5 9.5 4 20 4c0 10.5-5.5 16-16 16Z"/>
-    </symbol>
-    <!-- Person-Silhouette für Foto-Platzhalter -->
-    <symbol id="icon-person" viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-      <path d="M4.5 20c1.4-3.6 4.2-5.4 7.5-5.4s6.1 1.8 7.5 5.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-    </symbol>
-    <!-- Angebots-Icons -->
-    <symbol id="icon-signal" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="1.8" fill="currentColor"/>
-      <path d="M8.5 15.5a5 5 0 0 1 0-7M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M6 18a9 9 0 0 1 0-12M18 6a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="icon-target" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
-    </symbol>
-    <symbol id="icon-up" viewBox="0 0 24 24">
-      <path d="M4 19l5.5-5.5 3.5 3.5L20 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M14.5 10H20v5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
     <!-- Social-Icons (Originalformen, Quelle: simple-icons, CC0) -->
     <symbol id="icon-instagram" viewBox="0 0 24 24"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></symbol>
@@ -368,8 +295,13 @@
 <header>
   <div class="container">
     <nav>
-      <a href="#" class="logo">Umut<span>.</span></a>
-      <div class="nav-links">
+      <a href="#" class="logo" aria-label="Umut – Startseite">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 19 10 6l3.2 7L16 8l4 11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+        UMUT
+      </a>
+      <div class="nav-links mono">
         <a href="#angebote">Angebote</a>
         <a href="#mentorship">Mentorship</a>
         <a href="#partner">Partner</a>
@@ -382,102 +314,108 @@
 <!-- ================= PARTNER-TICKER (Laufband) ================= -->
 <!-- TODO: Ersetze die href-Links durch deine echten Blofin/Bybit Ref-Links -->
 <div class="ticker-wrap" aria-label="Offizielle Partner">
-  <div class="ticker" id="ticker">
+  <div class="ticker mono" id="ticker">
     <!-- Der Inhalt wird per JS verdoppelt für eine nahtlose Schleife -->
     <a class="ticker-item" href="https://blofin.com" target="_blank" rel="noopener">
-      <span class="dot">●</span> Offizieller Partner:
-      <span style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:#16130e;">
-        <svg class="t-logo" style="width:15px" viewBox="0 0 24 24"><use href="#logo-blofin-fin"/></svg>BloFin
+      <span class="dot"></span> Offizieller Partner
+      <span style="display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#16130e;text-transform:none;letter-spacing:0;font-family:'Helvetica Neue',Arial,sans-serif;">
+        <svg class="t-logo" style="width:14px" viewBox="0 0 24 24"><use href="#logo-blofin-fin"/></svg>BloFin
       </span>
-      <span class="tag">Bonus sichern →</span>
+      <u>Bonus sichern →</u>
     </a>
     <a class="ticker-item" href="https://www.bybit.com" target="_blank" rel="noopener">
-      <span class="dot">●</span> Offizieller Partner:
-      <svg class="t-logo" style="width:42px;height:15px"><use href="#logo-bybit"/></svg>
-      <span class="tag">Bonus sichern →</span>
+      <span class="dot"></span> Offizieller Partner
+      <svg class="t-logo" style="width:39px;height:14px"><use href="#logo-bybit"/></svg>
+      <u>Bonus sichern →</u>
     </a>
     <a class="ticker-item" href="#mentorship">
-      <span class="dot">●</span> 1:1 Mentorship <span class="tag">Plätze limitiert</span>
+      <span class="dot"></span> 1:1 Mentorship <u>Plätze limitiert</u>
     </a>
     <a class="ticker-item" href="#angebote">
-      <span class="dot">●</span> Signalgruppe <span class="tag">Jetzt beitreten</span>
+      <span class="dot"></span> Signalgruppe <u>Jetzt beitreten</u>
     </a>
   </div>
 </div>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <span class="eyebrow">Trader · Mentor · Content Creator</span>
-      <h1>Lerne Trading.<br>Werde <em>profitabel</em>.</h1>
-      <p>
-        Ich bin Umut – Trader und Mentor. Ich helfe dir, die Märkte zu verstehen,
-        eine echte Strategie aufzubauen und langfristig konstant zu performen.
-        Kein Bla-bla, nur echtes Wissen aus der Praxis.
-      </p>
-      <a href="#mentorship" class="btn btn-primary">Mentorship starten</a>
-      <a href="#angebote" class="btn btn-outline">Signalgruppe ansehen</a>
+  <canvas class="hero-art ht" data-shape="mountains" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="loc mono">🇩🇪 Deutschland &nbsp;·&nbsp; Trader · Mentor · Content Creator</div>
+    <h1>Lerne Trading.<br>Werde <span class="it">profitabel</span>.</h1>
+    <p class="lead">
+      Ich bin Umut – Trader und Mentor. Ich helfe dir, die Märkte zu verstehen,
+      eine echte Strategie aufzubauen und langfristig konstant zu performen.
+      Kein Bla-bla, nur echtes Wissen aus der Praxis.
+    </p>
+    <a href="#mentorship" class="btn btn-primary">Mentorship starten</a>
+    <a href="#angebote" class="btn btn-outline">Signalgruppe ansehen</a>
 
-      <div class="hero-stats">
-        <!-- TODO: Zahlen anpassen -->
-        <div class="stat"><b>3+</b><small>Jahre Erfahrung</small></div>
-        <div class="stat"><b>500+</b><small>Community-Mitglieder</small></div>
-        <div class="stat"><b>1:1</b><small>Persönliche Betreuung</small></div>
-      </div>
+    <div class="hero-stats">
+      <!-- TODO: Zahlen anpassen -->
+      <div class="stat"><b>3+</b><span class="mono">Jahre Erfahrung</span></div>
+      <div class="stat"><b>500+</b><span class="mono">Community-Mitglieder</span></div>
+      <div class="stat"><b>1:1</b><span class="mono">Persönliche Betreuung</span></div>
     </div>
+  </div>
+</section>
 
-    <!-- TODO: Diesen Platzhalter durch dein Foto ersetzen (siehe CSS-Kommentar .portrait) -->
-    <div class="portrait" role="img" aria-label="Platzhalter für ein Foto von Umut">
-      <svg><use href="#icon-person"/></svg>
-      <span><b>Dein Foto</b><br>kommt hier hin – ideal ist ein Hochformat-Porträt (4:5)</span>
-    </div>
+<!-- ================= STATEMENT ================= -->
+<section class="statement" aria-label="Leitsatz">
+  <div class="container">
+    <p class="reveal">
+      Trading ist kein Glücksspiel, sondern ein Handwerk: Präzision, Disziplin
+      und ein klarer Plan machen den Unterschied zwischen Zufallstreffern und
+      <span class="it">konstanter Performance</span>.
+    </p>
   </div>
 </section>
 
 <!-- ================= ANGEBOTE ================= -->
 <section id="angebote">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Angebote</span>
-      <h2 class="section-title">Womit ich dir helfe</h2>
+    <div class="section-head reveal">
+      <span class="mono">Angebote</span>
+      <h2 class="section-title">Womit ich dir <span class="it">helfe</span></h2>
       <p class="section-sub">Egal ob Einsteiger oder Fortgeschrittener – hier findest du das passende Paket für dein Level.</p>
     </div>
 
     <div class="cards">
       <!-- Signalgruppe -->
-      <div class="card featured">
-        <svg class="card-icon"><use href="#icon-signal"/></svg>
+      <div class="card reveal">
+        <span class="tag mono">Beliebt</span>
+        <span class="num">1.</span>
+        <canvas class="ht" data-shape="candles" aria-hidden="true"></canvas>
         <h3>Signalgruppe</h3>
         <ul>
           <li>Tägliche Trade-Setups &amp; Signale</li>
           <li>Einstieg, Stop-Loss &amp; Take-Profit</li>
           <li>Marktupdates &amp; Analysen</li>
           <li>Exklusive Community</li>
-          <li>Support bei Fragen</li>
         </ul>
         <!-- TODO: Link zu deiner Signalgruppe (z.B. Telegram/Whop) eintragen -->
         <a href="https://t.me/deinkanal" target="_blank" rel="noopener" class="btn btn-primary">Jetzt beitreten</a>
       </div>
 
       <!-- Mentorship -->
-      <div class="card" id="mentorship">
-        <svg class="card-icon"><use href="#icon-target"/></svg>
+      <div class="card reveal" id="mentorship">
+        <span class="num">2.</span>
+        <canvas class="ht" data-shape="target" aria-hidden="true"></canvas>
         <h3>1:1 Mentorship</h3>
         <ul>
           <li>Persönliches Coaching mit mir</li>
           <li>Komplette Strategie von A–Z</li>
           <li>Risk- &amp; Money-Management</li>
           <li>Trading-Psychologie</li>
-          <li>Live Trade-Besprechungen</li>
         </ul>
         <!-- TODO: Link für Mentorship-Anfragen eintragen (z.B. Telegram-DM, Calendly, Whop) -->
         <a href="https://t.me/deinusername" target="_blank" rel="noopener" class="btn btn-outline">Anfrage senden</a>
       </div>
 
       <!-- Kostenloser Einstieg -->
-      <div class="card">
-        <svg class="card-icon"><use href="#icon-up"/></svg>
+      <div class="card reveal">
+        <span class="num">3.</span>
+        <canvas class="ht" data-shape="trend" aria-hidden="true"></canvas>
         <h3>Kostenloser Einstieg</h3>
         <ul>
           <li>Free Telegram-Channel</li>
@@ -492,30 +430,56 @@
   </div>
 </section>
 
+<!-- ================= ÜBER MICH (Tiefgrün, mit Foto-Platzhalter) ================= -->
+<section class="about">
+  <div class="container about-grid">
+    <div class="reveal">
+      <span class="mono">Über mich</span>
+      <h2>Vom ersten Chart zur <span class="it">eigenen Strategie</span></h2>
+      <!-- TODO: Deine echte Story eintragen (2–4 Sätze reichen) -->
+      <p>
+        Ich habe selbst jeden Fehler gemacht, den man am Anfang machen kann –
+        und daraus ein System entwickelt, das auf Disziplin, Risk-Management
+        und wiederholbaren Setups basiert. Genau das gebe ich heute weiter.
+      </p>
+      <blockquote>
+        „Der Markt belohnt keine Hoffnung. Er belohnt Vorbereitung."
+      </blockquote>
+      <a href="#mentorship" class="btn btn-light">Mit mir arbeiten</a>
+    </div>
+    <div class="portrait-wrap reveal">
+      <!-- TODO: Foto einsetzen – ergänze data-src="dein-foto.jpg", dann wird
+           dein Bild automatisch in den Punkte-Look umgewandelt -->
+      <canvas class="ht" data-shape="portrait" role="img" aria-label="Platzhalter für ein Porträt von Umut"></canvas>
+      <span class="mono">Platzhalter – dein Porträt im Punkte-Look</span>
+    </div>
+  </div>
+</section>
+
 <!-- ================= PARTNER ================= -->
-<section id="partner" class="partners">
+<section id="partner">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Offizielle Partner</span>
-      <h2 class="section-title">Trade dort, wo ich trade</h2>
+    <div class="section-head reveal">
+      <span class="mono">Offizielle Partner</span>
+      <h2 class="section-title">Trade dort, wo <span class="it">ich</span> trade</h2>
       <p class="section-sub">Sichere dir über meine Links exklusive Boni bei meinen Partner-Börsen.</p>
     </div>
 
     <div class="partner-grid">
       <!-- TODO: Deinen Blofin Ref-Link eintragen -->
-      <a class="partner-card" href="https://blofin.com" target="_blank" rel="noopener">
+      <a class="partner-card reveal" href="https://blofin.com" target="_blank" rel="noopener">
         <span class="blofin-mark">
           <svg viewBox="0 0 24 24"><use href="#logo-blofin-fin"/></svg>BloFin
         </span>
-        <span class="bonus">🎁 Einzahlungsbonus über meinen Link</span>
+        <span class="bonus mono">Einzahlungsbonus über meinen Link</span>
         <p>Keine KYC-Pflicht, starke Futures-Plattform und top Konditionen. Melde dich über meinen Link an und sichere dir deinen Bonus.</p>
         <span class="btn btn-primary">Bei Blofin anmelden →</span>
       </a>
 
       <!-- TODO: Deinen Bybit Ref-Link eintragen -->
-      <a class="partner-card" href="https://www.bybit.com" target="_blank" rel="noopener">
-        <svg class="partner-logo" style="width:84px;height:30px"><use href="#logo-bybit"/></svg>
-        <span class="bonus">🎁 Bis zu 30.000$ Bonus möglich</span>
+      <a class="partner-card reveal" href="https://www.bybit.com" target="_blank" rel="noopener">
+        <svg class="partner-logo" style="width:78px;height:28px"><use href="#logo-bybit"/></svg>
+        <span class="bonus mono">Bis zu 30.000$ Bonus möglich</span>
         <p>Eine der größten Krypto-Börsen weltweit. Spot, Futures und mehr – registriere dich über meinen Link für exklusive Rewards.</p>
         <span class="btn btn-primary">Bei Bybit anmelden →</span>
       </a>
@@ -523,34 +487,46 @@
   </div>
 </section>
 
+<!-- ================= MÄRKTE / UHREN ================= -->
+<section class="world" aria-label="Handelszeiten">
+  <div class="container">
+    <canvas class="world-art ht" data-shape="globe" aria-hidden="true"></canvas>
+    <div class="clocks mono">
+      <span class="clock">🇩🇪 FRA <b data-tz="Europe/Berlin">--:--:--</b></span>
+      <span class="clock">🇺🇸 NYC <b data-tz="America/New_York">--:--:--</b></span>
+      <span class="clock">🇦🇪 DXB <b data-tz="Asia/Dubai">--:--:--</b></span>
+    </div>
+  </div>
+</section>
+
 <!-- ================= SOCIALS ================= -->
 <section id="socials">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Social Media</span>
-      <h2 class="section-title">Folge mir</h2>
+    <div class="section-head reveal">
+      <span class="mono">Social Media</span>
+      <h2 class="section-title">Folge <span class="it">mir</span></h2>
       <p class="section-sub">Tägliche Insights, Analysen und Behind-the-Scenes.</p>
     </div>
 
-    <div class="socials-grid">
+    <div class="social-list reveal">
       <!-- TODO: Alle Social-Media-Links durch deine echten Profile ersetzen -->
-      <a class="social-card" href="https://instagram.com/deinusername" target="_blank" rel="noopener">
-        <svg><use href="#icon-instagram"/></svg><b>Instagram</b><small>@deinusername</small>
+      <a class="social-row" href="https://instagram.com/deinusername" target="_blank" rel="noopener">
+        <svg><use href="#icon-instagram"/></svg><b>Instagram</b><span class="handle mono">@deinusername</span><span class="arrow">↗</span>
       </a>
-      <a class="social-card" href="https://t.me/deinkanal" target="_blank" rel="noopener">
-        <svg><use href="#icon-telegram"/></svg><b>Telegram</b><small>Haupt-Channel</small>
+      <a class="social-row" href="https://t.me/deinkanal" target="_blank" rel="noopener">
+        <svg><use href="#icon-telegram"/></svg><b>Telegram</b><span class="handle mono">Haupt-Channel</span><span class="arrow">↗</span>
       </a>
-      <a class="social-card" href="https://tiktok.com/@deinusername" target="_blank" rel="noopener">
-        <svg><use href="#icon-tiktok"/></svg><b>TikTok</b><small>@deinusername</small>
+      <a class="social-row" href="https://tiktok.com/@deinusername" target="_blank" rel="noopener">
+        <svg><use href="#icon-tiktok"/></svg><b>TikTok</b><span class="handle mono">@deinusername</span><span class="arrow">↗</span>
       </a>
-      <a class="social-card" href="https://youtube.com/@deinusername" target="_blank" rel="noopener">
-        <svg><use href="#icon-youtube"/></svg><b>YouTube</b><small>Videos &amp; Tutorials</small>
+      <a class="social-row" href="https://youtube.com/@deinusername" target="_blank" rel="noopener">
+        <svg><use href="#icon-youtube"/></svg><b>YouTube</b><span class="handle mono">Videos &amp; Tutorials</span><span class="arrow">↗</span>
       </a>
-      <a class="social-card" href="https://x.com/deinusername" target="_blank" rel="noopener">
-        <svg><use href="#icon-x"/></svg><b>X / Twitter</b><small>@deinusername</small>
+      <a class="social-row" href="https://x.com/deinusername" target="_blank" rel="noopener">
+        <svg><use href="#icon-x"/></svg><b>X / Twitter</b><span class="handle mono">@deinusername</span><span class="arrow">↗</span>
       </a>
-      <a class="social-card" href="https://discord.gg/deinserver" target="_blank" rel="noopener">
-        <svg><use href="#icon-discord"/></svg><b>Discord</b><small>Community</small>
+      <a class="social-row" href="https://discord.gg/deinserver" target="_blank" rel="noopener">
+        <svg><use href="#icon-discord"/></svg><b>Discord</b><span class="handle mono">Community</span><span class="arrow">↗</span>
       </a>
     </div>
   </div>
@@ -558,8 +534,8 @@
 
 <!-- ================= CTA ================= -->
 <section class="cta">
-  <div class="container">
-    <h2>Bereit, dein Trading aufs nächste Level zu bringen?</h2>
+  <div class="container reveal">
+    <h2>Bereit, dein Trading aufs <span class="it">nächste Level</span> zu bringen?</h2>
     <p>Sichere dir jetzt deinen Platz im Mentorship oder starte direkt in der Signalgruppe.</p>
     <a href="#angebote" class="btn btn-primary">Jetzt starten</a>
   </div>
@@ -568,15 +544,17 @@
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="container">
-    <div class="footer-links">
-      <a href="#angebote">Angebote</a>
-      <a href="#partner">Partner</a>
-      <a href="#socials">Socials</a>
-      <!-- TODO: Eigene Seiten für Impressum & Datenschutz verlinken (in DE Pflicht!) -->
-      <a href="#">Impressum</a>
-      <a href="#">Datenschutz</a>
+    <div class="footer-top">
+      <span class="mono">© <span id="year"></span> Umut</span>
+      <div class="footer-links mono">
+        <a href="#angebote">Angebote</a>
+        <a href="#partner">Partner</a>
+        <a href="#socials">Socials</a>
+        <!-- TODO: Eigene Seiten für Impressum & Datenschutz verlinken (in DE Pflicht!) -->
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
     </div>
-    <div>© <span id="year"></span> Umut. Alle Rechte vorbehalten.</div>
     <p class="disclaimer">
       Risikohinweis: Der Handel mit Kryptowährungen und gehebelten Produkten ist mit erheblichen Risiken
       verbunden und kann zum Totalverlust des eingesetzten Kapitals führen. Alle Inhalte dienen ausschließlich
@@ -586,12 +564,176 @@
 </footer>
 
 <script>
-  // Ticker-Inhalt verdoppeln für eine nahtlose Endlos-Schleife
+  // Kennzeichnet, dass JS aktiv ist (Scroll-Reveal nur dann verstecken)
+  document.documentElement.classList.add("js");
+
+  // ---------- Ticker-Inhalt verdoppeln für eine nahtlose Endlos-Schleife ----------
   const ticker = document.getElementById("ticker");
   ticker.innerHTML += ticker.innerHTML;
 
-  // Aktuelles Jahr im Footer
+  // ---------- Aktuelles Jahr im Footer ----------
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // ---------- Live-Uhren (Handelsplätze) ----------
+  function updateClocks() {
+    document.querySelectorAll("[data-tz]").forEach(el => {
+      el.textContent = new Date().toLocaleTimeString("de-DE", { timeZone: el.dataset.tz, hour12: false });
+    });
+  }
+  updateClocks();
+  setInterval(updateClocks, 1000);
+
+  // ---------- Scroll-Reveal ----------
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  // Sicherheitsnetz: nach 2,5s alles einblenden, falls der Observer nicht greift
+  setTimeout(() => document.querySelectorAll(".reveal:not(.in)").forEach(el => el.classList.add("in")), 2500);
+
+  // ============================================================
+  // Halbton-Grafiken (Punkteraster-Look wie auf gauss.ag)
+  // Jede <canvas class="ht" data-shape="..."> wird prozedural
+  // mit einem Punktraster gefüllt.
+  // ============================================================
+  const hash = (x, y) => {
+    const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+    return s - Math.floor(s);
+  };
+
+  // Formen: liefern Intensität 0..1 für Position (u, v) in [0,1]²
+  const shapes = {
+    mountains(u, v) {
+      const edge = Math.min(1, u * 6, (1 - u) * 6);            // seitlich ausblenden
+      const r1 = 0.34 + 0.17 * Math.sin(u * 4.2 + 0.8) + 0.10 * Math.sin(u * 11.7 + 2.0) + 0.04 * Math.sin(u * 27 + 5);
+      const r2 = 0.55 + 0.13 * Math.sin(u * 3.1 + 3.6) + 0.07 * Math.sin(u * 8.3 + 1.2);
+      let val = 0;
+      if (v > r1) val = Math.max(val, 0.95 - (v - r1) * 2.4);  // vordere Kette
+      if (v > r2) val = Math.max(val, 0.50 - (v - r2) * 1.6);  // hintere Kette
+      return Math.max(0, val) * edge;
+    },
+    portrait(u, v) {
+      let val = 0;
+      // Kopf
+      const dxh = (u - 0.5) / 0.17, dyh = (v - 0.33) / 0.21;
+      const dh = dxh * dxh + dyh * dyh;
+      if (dh < 1) val = 1 - dh * 0.25;
+      // Hals
+      if (u > 0.43 && u < 0.57 && v > 0.50 && v < 0.66) val = Math.max(val, 0.8);
+      // Schultern
+      const dxs = (u - 0.5) / 0.38, dys = (v - 1.02) / 0.42;
+      const ds = dxs * dxs + dys * dys;
+      if (ds < 1 && v > 0.58) val = Math.max(val, 0.95 - ds * 0.3);
+      // Licht von oben links
+      val *= 0.55 + 0.45 * Math.max(0, 1 - (u * 0.6 + v * 0.9));
+      return Math.max(0, val);
+    },
+    candles(u, v) {
+      // Abstrakter Candlestick-Chart
+      const cols = [0.62, 0.48, 0.55, 0.38, 0.30, 0.42, 0.22, 0.14];
+      const i = Math.min(cols.length - 1, Math.floor(u * cols.length));
+      const cu = (u * cols.length) % 1;
+      const top = cols[i];
+      const bodyH = 0.30;
+      if (cu > 0.25 && cu < 0.75 && v > top && v < top + bodyH) return 0.9;   // Körper
+      if (cu > 0.44 && cu < 0.56 && v > top - 0.12 && v < top + bodyH + 0.12) return 0.45; // Docht
+      return 0;
+    },
+    target(u, v) {
+      const d = Math.hypot((u - 0.5) * 1.6, v - 0.5);
+      if (d > 0.48) return 0;
+      const ring = Math.abs(Math.sin(d * 22));
+      return ring > 0.55 ? 0.85 - d * 0.8 : 0;
+    },
+    trend(u, v) {
+      const y = 0.78 - 0.55 * u + 0.06 * Math.sin(u * 9);
+      const band = Math.max(0, 1 - Math.abs(v - y) * 9);
+      const fill = v > y ? Math.max(0, 0.35 - (v - y) * 0.9) : 0;
+      return Math.max(band, fill);
+    },
+    globe(u, v) {
+      const dx = (u - 0.5) * 2.4, dy = (v - 0.5) * 1.15;
+      const d = Math.hypot(dx, dy);
+      if (d > 0.5) return 0;
+      const z = Math.sqrt(1 - (d / 0.5) * (d / 0.5));
+      const bands = 0.7 + 0.3 * Math.sin(Math.asin(Math.max(-1, Math.min(1, dx / 0.5))) * 6);
+      return z * 0.7 * bands;
+    }
+  };
+
+  function drawHalftone(canvas) {
+    const shape = shapes[canvas.dataset.shape];
+    if (!shape) return;
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    const ctx = canvas.getContext("2d");
+    ctx.scale(dpr, dpr);
+    const inGreen = !!canvas.closest(".about");
+    ctx.fillStyle = inGreen ? "#cfe0d5" : "#1a2b22";
+    const step = canvas.classList.contains("hero-art") || canvas.classList.contains("world-art") ? 7 : 6;
+    for (let y = step / 2; y < h; y += step) {
+      for (let x = step / 2; x < w; x += step) {
+        let v = shape(x / w, y / h);
+        if (v <= 0.03) continue;
+        v *= 0.7 + 0.6 * hash(x, y);                 // Dithering
+        const r = (step / 2) * 0.82 * Math.min(1, v);
+        if (r < 0.35) continue;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 6.2832);
+        ctx.fill();
+      }
+    }
+  }
+
+  // Foto → Halbton: wird aktiv, sobald am Portrait-Canvas data-src gesetzt ist
+  function drawPhotoHalftone(canvas, src) {
+    const img = new Image();
+    img.onload = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(dpr, dpr);
+      const off = document.createElement("canvas");
+      const ow = 120, oh = Math.round(ow * h / w);
+      off.width = ow; off.height = oh;
+      const octx = off.getContext("2d");
+      const scale = Math.max(ow / img.width, oh / img.height);
+      octx.drawImage(img, (ow - img.width * scale) / 2, (oh - img.height * scale) / 2, img.width * scale, img.height * scale);
+      const data = octx.getImageData(0, 0, ow, oh).data;
+      const inGreen = !!canvas.closest(".about");
+      ctx.fillStyle = inGreen ? "#cfe0d5" : "#1a2b22";
+      const step = 6;
+      for (let y = step / 2; y < h; y += step) {
+        for (let x = step / 2; x < w; x += step) {
+          const px = Math.min(ow - 1, Math.floor(x / w * ow));
+          const py = Math.min(oh - 1, Math.floor(y / h * oh));
+          const idx = (py * ow + px) * 4;
+          const lum = (data[idx] * 0.299 + data[idx + 1] * 0.587 + data[idx + 2] * 0.114) / 255;
+          const v = inGreen ? lum : 1 - lum;         // hell auf Grün, dunkel auf Hell
+          const r = (step / 2) * 0.85 * v;
+          if (r < 0.35) continue;
+          ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+        }
+      }
+    };
+    img.src = src;
+  }
+
+  function renderAll() {
+    document.querySelectorAll("canvas.ht").forEach(c => {
+      if (c.dataset.src) drawPhotoHalftone(c, c.dataset.src);
+      else drawHalftone(c);
+    });
+  }
+  renderAll();
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(renderAll, 200);
+  });
 </script>
 
 </body>
