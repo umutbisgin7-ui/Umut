@@ -34,12 +34,13 @@
   }
 
   :root {
-    --bg: #f9f9f7;
-    --bg-card: #f1f2ef;
+    --bg: #f7f8f9;
+    --bg-card: #edf1f5;
     --ink: #131f2b;          /* dunkles Marineblau-Schwarz */
-    --ink-dim: #6a7683;
-    --line: #e4e6e3;
+    --ink-dim: #667482;
+    --line: #dee4ea;
     --blue-deep: #14304d;    /* Old-Money-Navy */
+    --blue-dark: #0e2439;
     --blue-soft: #c9d7e4;
     --bybit: #f7a600;
     --blofin: #ff7a1a;
@@ -71,6 +72,7 @@
     font-weight: 400;
     letter-spacing: -0.01em;
   }
+  h1 .it, .section-title .it, .statement .it { color: var(--blue-deep); }
 
   .mono {
     font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
@@ -162,10 +164,10 @@
     transition: background .2s, color .2s, border-color .2s, transform .15s;
   }
   .btn:hover { transform: translateY(-1px); }
-  .btn-primary { background: var(--ink); color: var(--bg); }
-  .btn-primary:hover { background: var(--blue-deep); }
-  .btn-outline { border: 1px solid var(--ink); color: var(--ink); margin-left: 10px; }
-  .btn-outline:hover { background: var(--ink); color: var(--bg); }
+  .btn-primary { background: var(--blue-deep); color: #f2f6fa; }
+  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-outline { border: 1px solid var(--blue-deep); color: var(--blue-deep); margin-left: 10px; }
+  .btn-outline:hover { background: var(--blue-deep); color: #f2f6fa; }
   .btn-light { background: var(--bg); color: var(--blue-deep); }
   .btn-light:hover { background: var(--blue-soft); }
 
@@ -173,6 +175,7 @@
   .stat b {
     display: block; font-size: 1.9rem; font-weight: 600; letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
+    color: var(--blue-deep);
   }
   .stat .mono { color: var(--ink-dim); }
 
@@ -187,7 +190,7 @@
   /* ---------- Sections allgemein ---------- */
   section { padding: 96px 0; }
   .section-head { margin-bottom: 56px; }
-  .section-head .mono { color: var(--ink-dim); display: block; margin-bottom: 14px; }
+  .section-head .mono { color: var(--blue-deep); display: block; margin-bottom: 14px; }
   .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); }
   .section-sub { color: var(--ink-dim); max-width: 520px; margin-top: 12px; }
 
@@ -205,6 +208,7 @@
   .card .num {
     font-family: Georgia, "Times New Roman", serif; font-style: italic;
     font-size: 2.2rem; line-height: 1; margin-bottom: 18px;
+    color: var(--blue-deep);
   }
   .card h3 { font-size: 1.3rem; margin-bottom: 6px; letter-spacing: -0.02em; }
   .card .price { color: var(--blue-deep); display: block; margin-bottom: 14px; }
@@ -257,7 +261,7 @@
   .world-art { display: block; width: 100%; height: 320px; }
   .clocks { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 8px; }
   .clock { display: flex; align-items: center; gap: 8px; color: var(--ink-dim); border: 1px solid var(--line); padding: 6px 14px; background: var(--bg); }
-  .clock b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .clock b { color: var(--blue-deep); font-weight: 600; font-variant-numeric: tabular-nums; }
 
   /* ---------- Socials (Listen-Stil) ---------- */
   .social-list { border-top: 1px solid var(--line); }
@@ -274,20 +278,24 @@
   .social-row .arrow { color: var(--ink-dim); transition: transform .2s; }
   .social-row:hover .arrow { transform: translate(3px, -3px); color: var(--ink); }
 
-  /* ---------- CTA ---------- */
-  .cta { text-align: center; background: var(--bg-card); }
+  /* ---------- CTA (Navy) ---------- */
+  .cta { text-align: center; background: var(--blue-deep); color: #eaf0f5; }
   .cta h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 14px; }
-  .cta p { color: var(--ink-dim); max-width: 480px; margin: 0 auto 32px; }
+  .cta .it { color: var(--blue-soft); }
+  .cta p { color: #b6c6d4; max-width: 480px; margin: 0 auto 32px; }
 
-  /* ---------- Footer ---------- */
-  footer { padding: 46px 0; color: var(--ink-dim); font-size: 0.85rem; }
+  /* ---------- Footer (Navy) ---------- */
+  footer {
+    padding: 46px 0; font-size: 0.85rem;
+    background: var(--blue-dark); color: #9fb3c4;
+  }
   .footer-top {
     display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
     margin-bottom: 20px;
   }
   footer .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-  footer .footer-links a:hover { color: var(--ink); }
-  footer .disclaimer { max-width: 760px; font-size: 0.74rem; color: #98a2ad; margin-top: 16px; }
+  footer .footer-links a:hover { color: #ffffff; }
+  footer .disclaimer { max-width: 760px; font-size: 0.74rem; color: #7d93a8; margin-top: 16px; }
 
   a:focus-visible, .btn:focus-visible {
     outline: 2px solid var(--blue-deep); outline-offset: 3px;
@@ -551,7 +559,7 @@
   <div class="container reveal">
     <h2>Bereit, dein Trading aufs <span class="it">nächste Level</span> zu bringen?</h2>
     <p>Sichere dir jetzt deinen Platz im Mentorship oder starte direkt in der VIP-Signalgruppe.</p>
-    <a href="#angebote" class="btn btn-primary">Jetzt starten</a>
+    <a href="#angebote" class="btn btn-light">Jetzt starten</a>
   </div>
 </section>
 
@@ -620,20 +628,23 @@
       const edge = Math.min(1, u * 5, (1 - u) * 5);
       let val = 0;
       // Hügel des Kessels (hinten, sehr dezent)
-      const hill = 0.58 + 0.10 * Math.sin(u * 2.6 + 0.7) + 0.05 * Math.sin(u * 6.5 + 2.2);
-      if (v > hill) val = Math.max(val, 0.30 - (v - hill) * 0.55);
-      // Gebäude-Silhouette (links/Mitte, sparsam)
-      if (u > 0.06 && u < 0.58) {
-        const col = Math.floor(u * 26);
-        const bh = 0.66 + 0.16 * hash(col, 7);
-        if (v > bh && v < 0.97) val = Math.max(val, 0.55);
+      const hill = 0.62 + 0.08 * Math.sin(u * 2.6 + 0.7) + 0.04 * Math.sin(u * 6.5 + 2.2);
+      if (v > hill) val = Math.max(val, 0.20 - (v - hill) * 0.35);
+      // Gebäude-Silhouette (links/Mitte, niedrig und sparsam)
+      if (u > 0.06 && u < 0.50) {
+        const col = Math.floor(u * 22);
+        const bh = 0.76 + 0.11 * hash(col, 7);
+        if (v > bh && v < 0.97) val = Math.max(val, 0.42);
       }
-      // Fernsehturm (rechts): Schaft, Korb, Antenne
+      // Fernsehturm (rechts): konischer Schaft, Turmkorb, Antenne
       const tx = 0.74;
-      if (Math.abs(u - tx) < 0.004 && v > 0.34 && v < 0.97) val = Math.max(val, 0.85);
-      const dxk = (u - tx) / 0.026, dyk = (v - 0.30) / 0.055;
-      if (dxk * dxk + dyk * dyk < 1) val = Math.max(val, 0.9);
-      if (Math.abs(u - tx) < 0.0018 && v > 0.14 && v <= 0.34) val = Math.max(val, 0.7);
+      const shaft = 0.0045 + 0.005 * Math.max(0, v - 0.32);   // unten breiter
+      if (Math.abs(u - tx) < shaft && v > 0.32 && v < 0.97) val = Math.max(val, 1);
+      const dxk = (u - tx) / 0.036, dyk = (v - 0.245) / 0.058; // Korb
+      if (dxk * dxk + dyk * dyk < 1) val = Math.max(val, 1);
+      const dxr = (u - tx) / 0.021, dyr = (v - 0.322) / 0.024; // Absatz unterm Korb
+      if (dxr * dxr + dyr * dyr < 1) val = Math.max(val, 0.95);
+      if (Math.abs(u - tx) < 0.0022 && v > 0.05 && v <= 0.32) val = Math.max(val, 0.9); // Antenne
       return Math.max(0, val) * edge;
     },
     portrait(u, v) {
@@ -668,14 +679,14 @@
     const ctx = canvas.getContext("2d");
     ctx.scale(dpr, dpr);
     const inNavy = !!canvas.closest(".about");
-    ctx.fillStyle = inNavy ? "#c9d7e4" : "#131f2b";
-    const step = canvas.classList.contains("hero-art") || canvas.classList.contains("world-art") ? 6 : 6;
+    ctx.fillStyle = inNavy ? "#c9d7e4" : "#14304d";
+    const step = 6;
     for (let y = step / 2; y < h; y += step) {
       for (let x = step / 2; x < w; x += step) {
         let v = shape(x / w, y / h);
         if (v <= 0.03) continue;
-        v *= 0.75 + 0.45 * hash(x, y);               // dezentes Dithering
-        const r = (step / 2) * 0.72 * Math.min(1, v);
+        v *= v > 0.9 ? 0.95 : 0.75 + 0.45 * hash(x, y); // kräftige Formen kaum dithern
+        const r = (step / 2) * 0.78 * Math.min(1, v);
         if (r < 0.32) continue;
         ctx.beginPath();
         ctx.arc(x, y, r, 0, 6.2832);
@@ -710,7 +721,7 @@
       const lo = lums[Math.floor(lums.length * 0.05)];
       const hi = lums[Math.floor(lums.length * 0.95)];
       const inNavy = !!canvas.closest(".about");
-      ctx.fillStyle = inNavy ? "#c9d7e4" : "#131f2b";
+      ctx.fillStyle = inNavy ? "#c9d7e4" : "#14304d";
       const step = 6;
       for (let y = step / 2; y < h; y += step) {
         for (let x = step / 2; x < w; x += step) {
