@@ -647,17 +647,84 @@
       if (Math.abs(u - tx) < 0.0022 && v > 0.05 && v <= 0.32) val = Math.max(val, 0.9); // Antenne
       return Math.max(0, val) * edge;
     },
+    // Stilisiertes Porträt: Locken, markante Brauen, Schnurrbart,
+    // Kinnbart, Hemdkragen – helle Punkte auf Navy
     portrait(u, v) {
       let val = 0;
-      const dxh = (u - 0.5) / 0.17, dyh = (v - 0.33) / 0.21;
-      const dh = dxh * dxh + dyh * dyh;
-      if (dh < 1) val = 1 - dh * 0.25;
-      if (u > 0.43 && u < 0.57 && v > 0.50 && v < 0.66) val = Math.max(val, 0.8);
-      const dxs = (u - 0.5) / 0.38, dys = (v - 1.02) / 0.42;
-      const ds = dxs * dxs + dys * dys;
-      if (ds < 1 && v > 0.58) val = Math.max(val, 0.95 - ds * 0.3);
-      val *= 0.55 + 0.45 * Math.max(0, 1 - (u * 0.6 + v * 0.9));
-      return Math.max(0, val);
+      const cx = 0.5;
+
+      // Gesicht (Ellipse, zum Kinn hin schmaler)
+      const taper = 1 - 0.30 * Math.max(0, (v - 0.38) / 0.20);
+      const fx = (u - cx) / (0.19 * taper), fy = (v - 0.38) / 0.20;
+      const face = fx * fx + fy * fy;
+      if (face < 1) val = 0.96 - face * 0.20;
+
+      // Haare: dichte Lockenkappe (körnige Struktur), ersetzt das Gesicht oben
+      const hx = (u - cx) / 0.215, hy = (v - 0.235) / 0.165;
+      if (hx * hx + hy * hy < 1 && v < 0.295) {
+        const curl = hash(Math.floor(u * 34), Math.floor(v * 42));
+        val = 0.22 + 0.40 * curl;
+      }
+      // Koteletten zu den Seiten
+      if (v >= 0.295 && v < 0.42) {
+        const au = Math.abs(u - cx);
+        if (au > 0.150 * taper && au < 0.20) {
+          val = 0.24 + 0.28 * hash(Math.floor(u * 50), Math.floor(v * 50));
+        }
+      }
+
+      if (face < 1 && v >= 0.27) {
+        // Augenbrauen (kräftig, dunkel = Lücken)
+        if (Math.abs(v - 0.345) < 0.013) {
+          const au = Math.abs(u - cx);
+          if (au > 0.036 && au < 0.12) val = 0.12;
+        }
+        // Augen
+        const eyeL = ((u - (cx - 0.073)) / 0.032) ** 2 + ((v - 0.388) / 0.015) ** 2;
+        const eyeR = ((u - (cx + 0.073)) / 0.032) ** 2 + ((v - 0.388) / 0.015) ** 2;
+        if (eyeL < 1 || eyeR < 1) val = 0.30;
+        // Nasenschatten & Nasenspitze
+        if (Math.abs(u - cx) < 0.015 && v > 0.39 && v < 0.472) val = Math.min(val, 0.62);
+        if (Math.abs(u - cx) < 0.028 && Math.abs(v - 0.480) < 0.009) val = 0.32;
+        // Schnurrbart
+        if (Math.abs(v - 0.516) < 0.012 && Math.abs(u - cx) < 0.052) val = 0.15;
+        // Lippen
+        if (Math.abs(v - 0.545) < 0.012 && Math.abs(u - cx) < 0.040) val = 0.55;
+        // Kinnbart (leicht körnig)
+        if (v > 0.565 && v < 0.61 && Math.abs(u - cx) < 0.036) {
+          val = 0.18 + 0.15 * hash(Math.floor(u * 60), Math.floor(v * 60));
+        }
+        // Wangen-/Jochbein-Licht
+        const chL = ((u - (cx - 0.105)) / 0.05) ** 2 + ((v - 0.445) / 0.045) ** 2;
+        const chR = ((u - (cx + 0.105)) / 0.05) ** 2 + ((v - 0.445) / 0.045) ** 2;
+        if (chL < 1 || chR < 1) val = Math.max(val, 0.98);
+      }
+
+      // Ohren
+      const earL = ((u - (cx - 0.195)) / 0.024) ** 2 + ((v - 0.40) / 0.04) ** 2;
+      const earR = ((u - (cx + 0.195)) / 0.024) ** 2 + ((v - 0.40) / 0.04) ** 2;
+      if (earL < 1 || earR < 1) val = Math.max(val, 0.55);
+
+      // Hals (mit Schatten unter dem Kinn)
+      if (Math.abs(u - cx) < 0.078 && v > 0.575 && v < 0.72) {
+        val = Math.max(val, v < 0.625 ? 0.42 : 0.68);
+      }
+
+      // Schultern & Hemd (dunkel, aber klar sichtbar)
+      const sx = (u - cx) / 0.46, sy = (v - 1.02) / 0.34;
+      if (sx * sx + sy * sy < 1 && v > 0.66) {
+        val = Math.max(val, 0.30);
+        // Hemdkragen (V-Ausschnitt)
+        const kv = (v - 0.70) / 0.13;
+        if (kv > 0 && kv < 1) {
+          const kw = Math.abs(Math.abs(u - cx) - (0.085 - kv * 0.068));
+          if (kw < 0.016) val = Math.max(val, 0.58);
+        }
+      }
+
+      // Licht von oben
+      val *= 1.03 - 0.15 * v;
+      return Math.max(0, Math.min(1, val));
     },
     globe(u, v) {
       const dx = (u - 0.5) * 2.4, dy = (v - 0.5) * 1.15;
